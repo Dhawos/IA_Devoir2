@@ -74,4 +74,12 @@ public class Position {
         result = 31 * result + getY();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

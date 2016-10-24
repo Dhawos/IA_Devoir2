@@ -9,7 +9,7 @@ public class EmptyDomainException extends RuntimeException {
     Tile tile;
 
     public EmptyDomainException(Tile tile) {
-        super();
+        super("Tile at : (" + tile.getPosition().getX() + "," + tile.getPosition().getY() + ") has now an empty domain");
         this.tile = tile;
     }
 

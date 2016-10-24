@@ -71,7 +71,7 @@ public class SudokuGrid {
         int subSquareY = tile.getPosition().getY() / REGION_SIZE;
         for(int i = 0; i < REGION_SIZE; i++){
             for(int j = 0; j < REGION_SIZE;j++){
-                set.add(this.grid.get(subSquareX + i).get(subSquareY + j));
+                set.add(this.grid.get(subSquareX*REGION_SIZE + i).get(subSquareY*REGION_SIZE + j));
             }
         }
         //We remove the tile itself from its the set for obvious reasons
@@ -80,15 +80,12 @@ public class SudokuGrid {
     }
 
     public void setTileValue(Integer value, Tile tile) throws  ValueNotInDomainException{
-        if(tile.getDomain().contains(value)){
-            tile.setValue(value); //Setting the value to the tile
-            //Removing this value from all neighbors domain
-            for(Tile currentNeighbor : tile.getNeighbors()){
-                currentNeighbor.removeFromDomain(value);
-            }
-        }else{
-            throw new ValueNotInDomainException();
-        }
+        tile.setValue(value); //Setting the value to the tile
+        incrementNbValueSet();
+    }
+
+    public void setTileValue(Integer value, Position pos) throws  ValueNotInDomainException{
+        setTileValue(value,grid.get(pos.getX()).get(pos.getY()));
     }
 
     public boolean isComplete(){
