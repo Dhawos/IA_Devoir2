@@ -8,7 +8,7 @@ import ca.uqac.ia_devoir2.model.SudokuGrid;
 public class SudokuSolver {
     public static void main(String[] args) {
         SudokuGrid example = new SudokuGrid();
-
+        example.setTileValue();
         System.out.println(example);
     }
 }
