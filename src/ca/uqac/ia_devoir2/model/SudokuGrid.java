@@ -1,7 +1,10 @@
 package ca.uqac.ia_devoir2.model;
 
+import ca.uqac.ia_devoir2.model.exceptions.ValueNotInDomainException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -24,6 +27,11 @@ public class SudokuGrid {
                 this.grid.get(j).add(new Tile(new LinkedList<Integer>(Arrays.asList(Tile.POSSIBLE_VALUES)),i,j));
             }
         }
+        for(ArrayList<Tile> row : this.grid){
+            for(Tile tile : row){
+                tile.setNeighbors(getNeighbors(tile));
+            }
+        }
     }
 
     public int getNbValueSet() {
@@ -40,5 +48,46 @@ public class SudokuGrid {
 
     public Tile getTile(int x, int y){
         return this.grid.get(x).get(y);
+    }
+
+    //We don't explicitly declare edges, however this function will return
+    //every tile that should not have the same value as the one given as parameter.
+    //We call those tiles, the neighbors of a given tile.
+    //We use the HashSet class to avoid duplicates.
+    public HashSet<Tile> getNeighbors(Tile tile){
+        HashSet<Tile> set = new HashSet<>();
+        int rowIndex = tile.getPosition().getX();
+        int columnIndex = tile.getPosition().getY();
+        //First we add the other tiles in the same column
+        for(int i = 0; i < ARRAY_SIZE;i++){
+            set.add(this.grid.get(i).get(columnIndex));
+        }
+        //Then we add the other tiles in the same row
+        for(int i = 0; i < ARRAY_SIZE;i++){
+            set.add(this.grid.get(rowIndex).get(i));
+        }
+        //We want to find the sub square containing tile
+        int subSquareX = tile.getPosition().getX() / REGION_SIZE;
+        int subSquareY = tile.getPosition().getY() / REGION_SIZE;
+        for(int i = 0; i < REGION_SIZE; i++){
+            for(int j = 0; j < REGION_SIZE;j++){
+                set.add(this.grid.get(subSquareX + i).get(subSquareY + j));
+            }
+        }
+        //We remove the tile itself from its the set for obvious reasons
+        set.remove(tile);
+        return set;
+    }
+
+    public void setTileValue(Integer value, Tile tile) throws  ValueNotInDomainException{
+        if(tile.getDomain().contains(value)){
+            tile.setValue(value); //Setting the value to the tile
+            //Removing this value from all neighbors domain
+            for(Tile currentNeighbor : tile.getNeighbors()){
+                currentNeighbor.removeFromDomain(value);
+            }
+        }else{
+            throw new ValueNotInDomainException();
+        }
     }
 }
