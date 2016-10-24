@@ -1,5 +1,6 @@
 package ca.uqac.ia_devoir2;
 
+import ca.uqac.ia_devoir2.explorations.DepthExploration;
 import ca.uqac.ia_devoir2.model.Position;
 import ca.uqac.ia_devoir2.model.SudokuGrid;
 import ca.uqac.ia_devoir2.model.Tile;
@@ -48,7 +49,10 @@ public class SudokuSolver {
         example.setTileValue(4,new Position(7,8));
         example.setTileValue(9,new Position(8,8));
         /****************************************/
-        //example.setTileValue();
+        System.out.println(example);
+
+        System.out.println(DepthExploration.exploration(example));
+
         System.out.println(example);
     }
 

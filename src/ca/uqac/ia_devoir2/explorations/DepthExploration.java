@@ -7,7 +7,7 @@ import ca.uqac.ia_devoir2.model.Tile;
  * Created by dhawo on 24/10/2016.
  */
 public class DepthExploration {
-    public boolean exploration(SudokuGrid grid){
+    public static boolean exploration(SudokuGrid grid){
         int i = 0;
         while(!grid.isComplete()){
             Tile tileToFill = grid.smallestDomainTile();

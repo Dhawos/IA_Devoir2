@@ -96,7 +96,7 @@ public class SudokuGrid {
         Tile smallestDomainTile = this.grid.get(0).get(0);
         for (int i = 0; i < ARRAY_SIZE; i++) {
             for(int j = 0; j < ARRAY_SIZE; j++){
-                if (this.grid.get(i).get(j).isEmpty() && this.grid.get(i).get(j).getDomain().size() < smallestDomainTile.getDomain().size()){
+                if (!smallestDomainTile.isEmpty() || (this.grid.get(i).get(j).isEmpty() && this.grid.get(i).get(j).getDomain().size() < smallestDomainTile.getDomain().size())){
                     smallestDomainTile = this.grid.get(i).get(j);
                 }
             }
