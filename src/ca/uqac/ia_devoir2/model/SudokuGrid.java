@@ -24,7 +24,7 @@ public class SudokuGrid {
         for (int i = 0; i < ARRAY_SIZE; i++) {
             this.grid.add(i,new ArrayList<Tile>(ARRAY_SIZE));
             for(int j = 0; j < ARRAY_SIZE; j++){
-                this.grid.get(j).add(new Tile(new LinkedList<Integer>(Arrays.asList(Tile.POSSIBLE_VALUES)),i,j));
+                this.grid.get(i).add(new Tile(new LinkedList<Integer>(Arrays.asList(Tile.POSSIBLE_VALUES)),i,j));
             }
         }
         for(ArrayList<Tile> row : this.grid){
@@ -89,5 +89,22 @@ public class SudokuGrid {
         }else{
             throw new ValueNotInDomainException();
         }
+    }
+
+    @Override
+    public String toString() {
+        String output = new String();
+        for(ArrayList<Tile> row : this.grid){
+            for(Tile tile : row){
+                if(tile.getValue() == Tile.NOT_SET_VALUE){
+                    output += "X";
+                }else{
+                    output += tile.getValue().toString();
+                }
+                output += " ";
+            }
+            output += "\n";
+        }
+        return output;
     }
 }
