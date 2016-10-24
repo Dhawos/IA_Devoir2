@@ -50,8 +50,16 @@ public class Tile {
     }
 
     public void setValue(Integer value) {
-        this.value = value;
-        this.domain = null;
+        if(domain != null && this.domain.contains(value)){
+            this.value = value;
+            this.domain = null;
+            //Removing this value from all neighbors domain
+            for(Tile currentNeighbor : this.getNeighbors()){
+                currentNeighbor.removeFromDomain(value);
+            }
+        }else{
+            throw new ValueNotInDomainException(this,value);
+        }
     }
 
 
@@ -64,10 +72,10 @@ public class Tile {
     }
 
     public void removeFromDomain(Integer value) throws ValueNotInDomainException{
-        if(domain != null && !this.domain.remove(value)){
-            throw new ValueNotInDomainException();
+        if(this.domain != null){
+            this.domain.remove(value);
         }
-        if(this.domain.size() == 0){
+        if(this.domain != null && this.domain.size() == 0){
             throw new EmptyDomainException(this);
         }
     }
