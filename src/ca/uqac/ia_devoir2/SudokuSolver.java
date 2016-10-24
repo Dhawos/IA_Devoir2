@@ -52,19 +52,5 @@ public class SudokuSolver {
         System.out.println(example);
     }
 
-    public void exploration(SudokuGrid grid){
-        while(!grid.isComplete()){
-            Tile tileToFill = grid.smallestDomainTile();
-            if (tileToFill != null){
-                grid.setTileValue(tileToFill.getDomain().get(0), tileToFill);
 
-            }else{
-                // ERROR, we have to go back one iteration and change value
-            }
-
-
-
-        }
-        // If we get here, it should mean that this is over, and we have successfully filled the grid
-    }
 }
