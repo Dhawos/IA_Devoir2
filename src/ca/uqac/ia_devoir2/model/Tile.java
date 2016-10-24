@@ -72,6 +72,10 @@ public class Tile {
         }
     }
 
+    public boolean isEmpty(){
+        return this.value == NOT_SET_VALUE;
+    }
+
     public HashSet<Tile> getNeighbors() {
         return neighbors;
     }

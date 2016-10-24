@@ -91,6 +91,25 @@ public class SudokuGrid {
         }
     }
 
+    public boolean isComplete(){
+        return this.nbValueSet == ARRAY_SIZE * ARRAY_SIZE;
+    }
+
+    public Tile smallestDomainTile(){
+        Tile smallestDomainTile = this.grid.get(0).get(0);
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            for(int j = 0; j < ARRAY_SIZE; j++){
+                if (this.grid.get(i).get(j).isEmpty() && this.grid.get(i).get(j).getDomain().size() < smallestDomainTile.getDomain().size()){
+                    smallestDomainTile = this.grid.get(i).get(j);
+                }
+            }
+        }
+        if (smallestDomainTile.getDomain().size() ==0){
+            return null;
+        }
+        return smallestDomainTile;
+    }
+
     @Override
     public String toString() {
         String output = new String();
