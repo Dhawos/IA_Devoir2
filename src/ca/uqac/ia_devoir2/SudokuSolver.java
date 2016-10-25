@@ -3,7 +3,9 @@ package ca.uqac.ia_devoir2;
 import ca.uqac.ia_devoir2.explorations.DepthExploration;
 import ca.uqac.ia_devoir2.model.Position;
 import ca.uqac.ia_devoir2.model.SudokuGrid;
-import ca.uqac.ia_devoir2.model.Tile;
+import ca.uqac.ia_devoir2.view.MainFrame;
+
+import javax.swing.*;
 
 /**
  * Created by dhawo on 24/10/2016.
@@ -54,6 +56,15 @@ public class SudokuSolver {
         System.out.println(DepthExploration.exploration(example));
 
         System.out.println(example);
+        initView();
+
+    }
+
+    public static void initView(){
+        MainFrame mf = new MainFrame();
+    }
+    public void initControllers(){
+
     }
 
 
