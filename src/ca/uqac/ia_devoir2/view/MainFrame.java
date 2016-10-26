@@ -9,6 +9,7 @@ public class MainFrame extends JFrame {
 
     static final String TITLE = "Sudoku Solver";
     private SudokuBoard sudokuBoard;
+    private ControlPanel controlPanel = new ControlPanel();
 
     public MainFrame() {
         super(TITLE);
@@ -21,7 +22,7 @@ public class MainFrame extends JFrame {
 
         initLogger(bottomPanel);
         sudokuBoard = new SudokuBoard();
-
+        add(controlPanel, BorderLayout.EAST);
         add(sudokuBoard, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
         //setResizable(false);
@@ -41,5 +42,9 @@ public class MainFrame extends JFrame {
 
     public SudokuBoard getSudokuBoard() {
         return sudokuBoard;
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
     }
 }

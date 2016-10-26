@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Observable;
 
 /**
  * Created by dhawo on 24/10/2016.
@@ -105,6 +106,14 @@ public class SudokuGrid {
             return null;
         }
         return smallestDomainTile;
+    }
+
+    public void resetGrid(){
+        for(int i = 0; i < REGION_SIZE; i++){
+            for(int j = 0; j < REGION_SIZE;j++){
+                //setTileValue(null, new Position(i,j));
+            }
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import ca.uqac.ia_devoir2.model.exceptions.ValueNotInDomainException;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Observable;
 
 /**
  * Created by dhawo on 24/10/2016.
@@ -13,7 +14,7 @@ import java.util.LinkedList;
 //The domain represents the list of integer that are still legal for this tile
 //If the field value is set to -1, this means the tile has no value yet
 //The tile is meant for a 3x3 grid
-public class Tile {
+public class Tile extends Observable {
     private Integer value;
     private LinkedList<Integer> domain;
     private Position position;
@@ -57,6 +58,9 @@ public class Tile {
             for(Tile currentNeighbor : this.getNeighbors()){
                 currentNeighbor.removeFromDomain(value);
             }
+            setChanged();
+            notifyObservers();
+
         }else{
             throw new ValueNotInDomainException(this,value);
         }
