@@ -26,16 +26,16 @@ public class TextTile extends JFormattedTextField implements Observer {
     public void update(Observable o, Object arg) {
         if(o instanceof Tile){
             Tile tile = (Tile)o;
-            if(tile.getValue() == null){
+            if(tile.getValue() == Tile.NOT_SET_VALUE){
                 setText("");
                 setForeground(Color.black);
                 setFocusable(true);
             }
-            if(!tile.getValue().toString().equals(this.getText().toString())){
+            else if(!tile.getValue().toString().equals(this.getText().toString())){
                 setText(tile.getValue().toString());
                 setForeground(Color.RED);
+                setFocusable(false);
             }
-            setFocusable(false);
         }
     }
 

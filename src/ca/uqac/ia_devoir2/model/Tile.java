@@ -3,6 +3,7 @@ package ca.uqac.ia_devoir2.model;
 import ca.uqac.ia_devoir2.model.exceptions.EmptyDomainException;
 import ca.uqac.ia_devoir2.model.exceptions.ValueNotInDomainException;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Observable;
@@ -24,6 +25,12 @@ public class Tile extends Observable {
     public final static int NOT_SET_VALUE = -1;
     public final static Integer[] POSSIBLE_VALUES = {1,2,3,4,5,6,7,8,9};
 
+    public Tile(Position pos){
+        this.value = NOT_SET_VALUE;
+        this.domain = new LinkedList<Integer>(Arrays.asList(Tile.POSSIBLE_VALUES));
+        this.position = pos;
+    }
+
     public Tile(LinkedList<Integer> domain, Position position) {
         this.value = NOT_SET_VALUE;
         this.domain = domain;
@@ -39,11 +46,13 @@ public class Tile extends Observable {
     public Tile(int value, Position position) {
         this.value = value;
         this.position = position;
+        this.domain = null;
     }
 
     public Tile(int value, int x, int y) {
         this.value = value;
         this.position = new Position(x,y);
+        this.domain = null;
     }
 
     public Integer getValue() {
@@ -58,12 +67,14 @@ public class Tile extends Observable {
             for(Tile currentNeighbor : this.getNeighbors()){
                 currentNeighbor.removeFromDomain(value);
             }
-            setChanged();
-            notifyObservers();
 
+        }else if(value == Tile.NOT_SET_VALUE){
+            this.value = value;
         }else{
             throw new ValueNotInDomainException(this,value);
         }
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -96,13 +107,7 @@ public class Tile extends Observable {
         this.neighbors = neighbors;
     }
 
-    /*
-    public void addToDomain(Integer value) throws  ValueNotInAcceptableRangeException{
-        if(value >= 0 && value <=MAXVALUE){
-            this.domain.push(value);
-        }else{
-            throw new ValueNotInAcceptableRangeException();
-        }
+    public void setDomain(LinkedList<Integer> domain) {
+        this.domain = domain;
     }
-    */
 }

@@ -35,6 +35,27 @@ public class SudokuGrid {
         }
     }
 
+    public SudokuGrid(SudokuGrid other) {
+        this.nbValueSet = other.getNbValueSet();
+        this.grid = new ArrayList<>(ARRAY_SIZE);
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            this.grid.add(i,new ArrayList<Tile>(ARRAY_SIZE));
+            for(int j = 0; j < ARRAY_SIZE; j++){
+                if(other.grid.get(i).get(j).getDomain() == null){
+                    this.grid.get(i).add(new Tile(other.grid.get(i).get(j).getValue(),i,j));
+                }else{
+                    this.grid.get(i).add(new Tile(new LinkedList<Integer>(other.grid.get(i).get(j).getDomain()),i,j));
+                }
+            }
+        }
+        for(ArrayList<Tile> row : this.grid){
+            for(Tile tile : row){
+                tile.setNeighbors(getNeighbors(tile));
+            }
+        }
+    }
+
+
     public int getNbValueSet() {
         return nbValueSet;
     }
@@ -102,18 +123,22 @@ public class SudokuGrid {
                 }
             }
         }
-        if (smallestDomainTile.getDomain().size() ==0){
+        /*
+        if (smallestDomainTile.getDomain().size()==0){
             return null;
         }
+        */
         return smallestDomainTile;
     }
 
     public void resetGrid(){
-        for(int i = 0; i < REGION_SIZE; i++){
-            for(int j = 0; j < REGION_SIZE;j++){
-                //setTileValue(null, new Position(i,j));
+        for(int i = 0; i < ARRAY_SIZE; i++){
+            for(int j = 0; j < ARRAY_SIZE;j++){
+                this.grid.get(i).get(j).setDomain(new LinkedList<Integer>(Arrays.asList(Tile.POSSIBLE_VALUES)));
+                this.grid.get(i).get(j).setValue(Tile.NOT_SET_VALUE);
             }
         }
+        this.nbValueSet = 0;
     }
 
     @Override
