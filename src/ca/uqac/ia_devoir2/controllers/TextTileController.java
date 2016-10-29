@@ -3,6 +3,7 @@ package ca.uqac.ia_devoir2.controllers;
 import ca.uqac.ia_devoir2.model.Position;
 import ca.uqac.ia_devoir2.model.SudokuGrid;
 import ca.uqac.ia_devoir2.model.Tile;
+import ca.uqac.ia_devoir2.model.exceptions.ValueNotInDomainException;
 import ca.uqac.ia_devoir2.view.TextTile;
 
 import javax.swing.event.DocumentEvent;
@@ -37,14 +38,16 @@ public class TextTileController implements DocumentListener {
             Position tilePosition = textTile.getPosition();
             try {
                 if (!textTile.getText().toString().equals(sudokuGrid.getTile(tilePosition).getValue().toString()))
-                    if (!textTile.getText().equals(""))
-                        sudokuGrid.getTile(tilePosition).setValue(Integer.parseInt(textTile.getText()));
-                    else
-                        sudokuGrid.getTile(tilePosition).setValue(Tile.NOT_SET_VALUE);
-            } catch (Exception ex) {
+                    if (!textTile.getText().equals("")){
+                        sudokuGrid.setTileValue(Integer.parseInt(textTile.getText()),sudokuGrid.getTile(tilePosition));
+                    }
+                    else{
+                        sudokuGrid.setTileValue(-1,sudokuGrid.getTile(tilePosition));
+                    }
+            } catch (ValueNotInDomainException ex) {
+                sudokuGrid.setTileValue(-1,sudokuGrid.getTile(tilePosition));
                 System.out.println(ex.getMessage());
             }
-
         }
     }
 }

@@ -67,7 +67,6 @@ public class Tile extends Observable {
             for(Tile currentNeighbor : this.getNeighbors()){
                 currentNeighbor.removeFromDomain(value);
             }
-
         }else if(value == Tile.NOT_SET_VALUE){
             this.value = value;
         }else{

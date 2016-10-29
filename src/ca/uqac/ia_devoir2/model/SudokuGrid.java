@@ -103,8 +103,10 @@ public class SudokuGrid {
 
     public void setTileValue(Integer value, Tile tile) throws  ValueNotInDomainException{
         tile.setValue(value); //Setting the value to the tile
-        incrementNbValueSet();
-    }
+        if(value != Tile.NOT_SET_VALUE){
+            incrementNbValueSet();
+        }
+}
 
     public void setTileValue(Integer value, Position pos) throws  ValueNotInDomainException{
         setTileValue(value,grid.get(pos.getX()).get(pos.getY()));
