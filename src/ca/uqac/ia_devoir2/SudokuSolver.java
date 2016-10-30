@@ -75,7 +75,7 @@ public class SudokuSolver {
         for (int i = 0; i < tiles.length; i++)
             for (int j = 0; j < tiles[i].length; j++) {
                 model.getTile(i, j).addObserver(tiles[i][j]);
-                tiles[i][j].getDocument().addDocumentListener(textTileController);
+                tiles[i][j].addFocusListener(textTileController);
             }
         mf.getControlPanel().getStartDepthButton().addMouseListener(startController);
         mf.getControlPanel().getResetButton().addMouseListener(startController);

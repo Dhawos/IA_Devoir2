@@ -58,9 +58,8 @@ public class SudokuBoard extends JPanel{
 
         NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
         formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
+        formatter.setMinimum(1);
         formatter.setMaximum(9);
-
         for (int row = startRow; row < startRow + 3; row++)
             for (int col = startCol; col < startCol + 3; col++)
                 fields[row][col] = new TextTile(formatter, new Position(row,col));

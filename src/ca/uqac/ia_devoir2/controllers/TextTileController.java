@@ -8,8 +8,10 @@ import ca.uqac.ia_devoir2.view.TextTile;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-public class TextTileController implements DocumentListener {
+public class TextTileController implements FocusListener {
 
     private SudokuGrid sudokuGrid;
 
@@ -18,23 +20,14 @@ public class TextTileController implements DocumentListener {
     }
 
     @Override
-    public void insertUpdate(DocumentEvent e) {
-        updateValue(e);
+    public void focusGained(FocusEvent e) {
+
     }
 
     @Override
-    public void removeUpdate(DocumentEvent e) {
-        updateValue(e);
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-
-    }
-
-    private void updateValue(DocumentEvent e) {
-        if (e.getDocument().getProperty("parent") instanceof TextTile) {
-            TextTile textTile = (TextTile) e.getDocument().getProperty("parent");
+    public void focusLost(FocusEvent e) {
+        if (e.getSource() instanceof TextTile) {
+            TextTile textTile = (TextTile) e.getSource();
             Position tilePosition = textTile.getPosition();
             try {
                 if (!textTile.getText().toString().equals(sudokuGrid.getTile(tilePosition).getValue().toString()))
@@ -42,12 +35,16 @@ public class TextTileController implements DocumentListener {
                         sudokuGrid.setTileValue(Integer.parseInt(textTile.getText()),sudokuGrid.getTile(tilePosition));
                     }
                     else{
-                        sudokuGrid.setTileValue(-1,sudokuGrid.getTile(tilePosition));
+                        sudokuGrid.setTileValue(Tile.NOT_SET_VALUE,sudokuGrid.getTile(tilePosition));
                     }
             } catch (ValueNotInDomainException ex) {
-                sudokuGrid.setTileValue(-1,sudokuGrid.getTile(tilePosition));
+                sudokuGrid.setTileValue(Tile.NOT_SET_VALUE,sudokuGrid.getTile(tilePosition));
                 System.out.println(ex.getMessage());
+            } catch (NumberFormatException ex) {
+                System.out.println(textTile.getText() + " is not a correct number!");
+                sudokuGrid.setTileValue(Tile.NOT_SET_VALUE, sudokuGrid.getTile(tilePosition));
             }
         }
     }
+
 }

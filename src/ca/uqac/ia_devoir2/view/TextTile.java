@@ -4,6 +4,8 @@ import ca.uqac.ia_devoir2.model.Position;
 import ca.uqac.ia_devoir2.model.Tile;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,12 +16,13 @@ public class TextTile extends JFormattedTextField implements Observer {
 
     private Position position;
 
-    public TextTile(AbstractFormatter formatter, Position position) {
+    public TextTile(NumberFormatter formatter, Position position) {
         super(formatter);
         this.position = position;
         setFont(DEFAULT_FONT);
         setHorizontalAlignment(JTextField.CENTER);
         getDocument().putProperty("parent", this);
+
     }
 
     @Override
@@ -42,4 +45,6 @@ public class TextTile extends JFormattedTextField implements Observer {
     public Position getPosition() {
         return position;
     }
+
 }
+
