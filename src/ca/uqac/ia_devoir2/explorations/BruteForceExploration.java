@@ -4,10 +4,13 @@ import ca.uqac.ia_devoir2.model.SudokuGrid;
 import ca.uqac.ia_devoir2.model.Tile;
 import ca.uqac.ia_devoir2.model.exceptions.EmptyDomainException;
 
+import java.util.Observable;
+
+
 /**
  * Created by dhawo on 24/10/2016.
  */
-public class BruteForceExploration implements Runnable {
+public class BruteForceExploration extends Observable implements Runnable {
 
     private SudokuGrid grid;
 
@@ -30,6 +33,7 @@ public class BruteForceExploration implements Runnable {
                     SudokuGrid newGrid = new SudokuGrid(grid);
                     Tile tileToFillNewGrid = newGrid.getTile(tileToFill.getPosition());
                     newGrid.setTileValue(value,tileToFillNewGrid);
+                    notifyObservers();
                     if(exploration(newGrid)){
                         return true;
                     }else{
@@ -51,4 +55,6 @@ public class BruteForceExploration implements Runnable {
         startExploration();
         System.out.println(grid);
     }
+
+
 }
