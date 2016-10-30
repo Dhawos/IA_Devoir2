@@ -13,17 +13,17 @@ import java.util.Observable;
 public class BruteForceExploration extends Observable implements Runnable {
 
     private SudokuGrid grid;
+    private boolean finished = false;
 
     public BruteForceExploration(SudokuGrid sudokuGrid) {
         this.grid = sudokuGrid;
     }
 
-    public boolean startExploration(){
+    public SudokuGrid startExploration(){
         return this.exploration(this.grid);
     }
 
-    public boolean exploration(SudokuGrid grid) {
-        int i = 0;
+    public SudokuGrid exploration(SudokuGrid grid) {
         while(!grid.isComplete()){
             Tile tileToFill = grid.nextEmptyTile();
             //We try the current value of i and see where it gets us
@@ -33,27 +33,26 @@ public class BruteForceExploration extends Observable implements Runnable {
                     SudokuGrid newGrid = new SudokuGrid(grid);
                     Tile tileToFillNewGrid = newGrid.getTile(tileToFill.getPosition());
                     newGrid.setTileValue(value,tileToFillNewGrid);
-                    notifyObservers();
-                    if(exploration(newGrid)){
-                        return true;
-                    }else{
-                        return false;
+                    notifyObservers(newGrid);
+                    SudokuGrid result = exploration(newGrid);
+                    if(result != null){
+                        return result;
                     }
                 }catch(EmptyDomainException ex){
                     //In this exploration we don't use constraint propagation
                     //Therefore we ignore the exception
                 }
             }
-            return false;
+            return null;
         }
         // If we get here, it should mean that this is over, and we have successfully filled the grid
-        return true;
+        return grid;
     }
 
     @Override
     public void run() {
-        startExploration();
-        System.out.println(grid);
+        SudokuGrid result = startExploration();
+        System.out.println(result);
     }
 
 
