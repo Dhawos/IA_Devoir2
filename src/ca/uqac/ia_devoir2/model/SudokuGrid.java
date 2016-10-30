@@ -42,7 +42,7 @@ public class SudokuGrid {
             this.grid.add(i,new ArrayList<Tile>(ARRAY_SIZE));
             for(int j = 0; j < ARRAY_SIZE; j++){
                 if(other.grid.get(i).get(j).getDomain() == null){
-                    this.grid.get(i).add(new Tile(other.grid.get(i).get(j).getValue(),i,j));
+                    this.grid.get(i).add(new Tile(new Integer(other.grid.get(i).get(j).getValue()),i,j));
                 }else{
                     this.grid.get(i).add(new Tile(new LinkedList<Integer>(other.grid.get(i).get(j).getDomain()),i,j));
                 }
@@ -131,6 +131,18 @@ public class SudokuGrid {
         }
         */
         return smallestDomainTile;
+    }
+
+    public Tile nextEmptyTile(){
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            for(int j = 0; j < ARRAY_SIZE; j++){
+                Tile currentTile = this.grid.get(i).get(j);
+                if (currentTile.isEmpty()){
+                    return currentTile;
+                }
+            }
+        }
+        throw new RuntimeException("No empty tile was found");
     }
 
     public void resetGrid(){

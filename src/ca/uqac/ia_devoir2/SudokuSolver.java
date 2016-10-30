@@ -79,7 +79,7 @@ public class SudokuSolver {
             }
         mf.getControlPanel().getStartDepthButton().addMouseListener(startController);
         mf.getControlPanel().getResetButton().addMouseListener(startController);
-        //mf.getControlPanel().getOtherButton,().addMouseListener(startController);
+        mf.getControlPanel().getStartOtherButton().addMouseListener(startController);
     }
 
     private void initControllers() {

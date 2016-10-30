@@ -85,12 +85,18 @@ public class Tile extends Observable {
         return position;
     }
 
-    public void removeFromDomain(Integer value) throws ValueNotInDomainException{
+    public void removeFromDomain(Integer value) throws EmptyDomainException{
         if(this.domain != null){
             this.domain.remove(value);
         }
         if(this.domain != null && this.domain.size() == 0){
             throw new EmptyDomainException(this);
+        }
+    }
+
+    public void addToNeighborsDomain(Integer value){
+        for(Tile currentTile : this.neighbors){
+            currentTile.domain.add(value);
         }
     }
 

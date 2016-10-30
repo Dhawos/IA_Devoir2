@@ -1,5 +1,6 @@
 package ca.uqac.ia_devoir2.controllers;
 
+import ca.uqac.ia_devoir2.explorations.BruteForceExploration;
 import ca.uqac.ia_devoir2.explorations.DepthExploration;
 import ca.uqac.ia_devoir2.model.SudokuGrid;
 import ca.uqac.ia_devoir2.model.Tile;
@@ -22,8 +23,12 @@ public class StartController extends MouseAdapter {
             JButton button = (JButton) e.getSource();
             switch (button.getText()) {
                 case "Depth Exploration":
-                    Thread t = new Thread(new DepthExploration(sudokuGrid));
-                    t.start();
+                    Thread t1 = new Thread(new DepthExploration(sudokuGrid));
+                    t1.start();
+                    break;
+                case "Other Explo":
+                    Thread t2 = new Thread(new BruteForceExploration(sudokuGrid));
+                    t2.start();
                     break;
                 case "Reset":
                     sudokuGrid.resetGrid();

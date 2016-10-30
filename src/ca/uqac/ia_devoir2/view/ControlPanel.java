@@ -8,12 +8,13 @@ public class ControlPanel extends JPanel {
 
     JButton startDepthButton = new JButton("Depth Exploration");
     JButton resetButton = new JButton("Reset");
+    JButton startOtherButton = new JButton("Other Explo");
 
     public ControlPanel() {
         setLayout(new GridLayout(3,1,0,20));
         setBorder(new EmptyBorder(100,10,100,10));
         add(startDepthButton);
-        add(new JButton("Other Explo"));
+        add(startOtherButton);
         add(resetButton);
     }
 
@@ -24,4 +25,6 @@ public class ControlPanel extends JPanel {
     public JButton getResetButton() {
         return resetButton;
     }
+
+    public JButton getStartOtherButton(){return startOtherButton;}
 }
