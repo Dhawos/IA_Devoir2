@@ -33,7 +33,6 @@ public class DepthExploration extends Observable implements Runnable {
                     //grid.setTileValue(tileToFill.getDomain().get(i), tileToFill);
                     Tile tileToFillNewGrid = newGrid.getTile(tileToFill.getPosition());
                     newGrid.setTileValue(tileToFillNewGrid.getDomain().get(i),tileToFillNewGrid);
-                    notifyObservers(newGrid);
                     //System.out.println(grid);
                 }else{
                     return null;
@@ -56,6 +55,11 @@ public class DepthExploration extends Observable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(startExploration());
+        SudokuGrid result = startExploration();
+        if(result != null){
+            setChanged();
+            notifyObservers(result);
+        }
+        System.out.println(result);
     }
 }

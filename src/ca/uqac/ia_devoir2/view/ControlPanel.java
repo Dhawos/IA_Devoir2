@@ -8,13 +8,13 @@ public class ControlPanel extends JPanel {
 
     JButton startDepthButton = new JButton("Depth Exploration");
     JButton resetButton = new JButton("Reset");
-    JButton startOtherButton = new JButton("Other Explo");
+    JButton startBruteForceButton = new JButton("BruteForce Exploration");
 
     public ControlPanel() {
         setLayout(new GridLayout(3,1,0,20));
         setBorder(new EmptyBorder(100,10,100,10));
         add(startDepthButton);
-        add(startOtherButton);
+        add(startBruteForceButton);
         add(resetButton);
     }
 
@@ -26,5 +26,7 @@ public class ControlPanel extends JPanel {
         return resetButton;
     }
 
-    public JButton getStartOtherButton(){return startOtherButton;}
+    public JButton getStartBruteForceButton() {
+        return startBruteForceButton;
+    }
 }

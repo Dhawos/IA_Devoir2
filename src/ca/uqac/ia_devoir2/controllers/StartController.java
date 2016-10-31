@@ -11,10 +11,14 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class StartController extends MouseAdapter {
+    private DepthExploration depthExploration;
+    private BruteForceExploration bruteForceExploration;
     private SudokuGrid sudokuGrid;
 
-    public StartController(SudokuGrid sudokuGrid) {
+    public StartController(SudokuGrid sudokuGrid, DepthExploration depthExploration, BruteForceExploration bruteForceExploration) {
         this.sudokuGrid = sudokuGrid;
+        this.depthExploration = depthExploration;
+        this.bruteForceExploration = bruteForceExploration;
     }
 
     @Override
@@ -23,11 +27,11 @@ public class StartController extends MouseAdapter {
             JButton button = (JButton) e.getSource();
             switch (button.getText()) {
                 case "Depth Exploration":
-                    Thread t1 = new Thread(new DepthExploration(sudokuGrid));
+                    Thread t1 = new Thread(depthExploration);
                     t1.start();
                     break;
-                case "Other Explo":
-                    Thread t2 = new Thread(new BruteForceExploration(sudokuGrid));
+                case "BruteForce Exploration":
+                    Thread t2 = new Thread(bruteForceExploration);
                     t2.start();
                     break;
                 case "Reset":

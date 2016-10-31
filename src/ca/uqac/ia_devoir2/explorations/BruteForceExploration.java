@@ -33,7 +33,6 @@ public class BruteForceExploration extends Observable implements Runnable {
                     SudokuGrid newGrid = new SudokuGrid(grid);
                     Tile tileToFillNewGrid = newGrid.getTile(tileToFill.getPosition());
                     newGrid.setTileValue(value,tileToFillNewGrid);
-                    notifyObservers(newGrid);
                     SudokuGrid result = exploration(newGrid);
                     if(result != null){
                         return result;
@@ -52,6 +51,10 @@ public class BruteForceExploration extends Observable implements Runnable {
     @Override
     public void run() {
         SudokuGrid result = startExploration();
+        if(result != null){
+            setChanged();
+            notifyObservers(result);
+        }
         System.out.println(result);
     }
 

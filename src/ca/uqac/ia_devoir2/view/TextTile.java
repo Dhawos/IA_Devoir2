@@ -1,6 +1,9 @@
 package ca.uqac.ia_devoir2.view;
 
+import ca.uqac.ia_devoir2.explorations.BruteForceExploration;
+import ca.uqac.ia_devoir2.explorations.DepthExploration;
 import ca.uqac.ia_devoir2.model.Position;
+import ca.uqac.ia_devoir2.model.SudokuGrid;
 import ca.uqac.ia_devoir2.model.Tile;
 
 import javax.swing.*;
@@ -37,6 +40,16 @@ public class TextTile extends JFormattedTextField implements Observer {
             else if(!tile.getValue().toString().equals(this.getText().toString())){
                 setText(tile.getValue().toString());
                 setForeground(Color.RED);
+                setFocusable(false);
+            }
+        } else if(o instanceof DepthExploration || o instanceof BruteForceExploration){
+            if(arg instanceof SudokuGrid){
+                Tile tile = ((SudokuGrid)arg).getTile(this.position);
+                if(!tile.getValue().toString().equals(this.getText().toString())){
+                    setText(tile.getValue().toString());
+                    setForeground(Color.RED);
+
+                }
                 setFocusable(false);
             }
         }

@@ -2,6 +2,7 @@ package ca.uqac.ia_devoir2;
 
 import ca.uqac.ia_devoir2.controllers.StartController;
 import ca.uqac.ia_devoir2.controllers.TextTileController;
+import ca.uqac.ia_devoir2.explorations.BruteForceExploration;
 import ca.uqac.ia_devoir2.explorations.DepthExploration;
 import ca.uqac.ia_devoir2.model.Position;
 import ca.uqac.ia_devoir2.model.SudokuGrid;
@@ -18,14 +19,19 @@ public class SudokuSolver {
     private StartController startController;
     private TextTileController textTileController;
     private SudokuGrid example;
+    private DepthExploration depthExploration;
+    private BruteForceExploration bruteForceExploration;
 
     public static void main(String[] args) {
         /*Example Grid*/
         SudokuSolver main = new SudokuSolver();
         main.example = new SudokuGrid();
 
+        main.depthExploration = new DepthExploration(main.example);
+        main.bruteForceExploration= new BruteForceExploration(main.example);
+
         main.initControllers();
-        main.initView(main.example);
+        main.initView();
 
         main.example.setTileValue(2, new Position(0, 0));
         main.example.setTileValue(3, new Position(1, 0));
@@ -69,21 +75,23 @@ public class SudokuSolver {
 
     }
 
-    private void initView(SudokuGrid model) {
+    private void initView() {
         MainFrame mf = new MainFrame();
         TextTile[][] tiles = mf.getSudokuBoard().getFields();
         for (int i = 0; i < tiles.length; i++)
             for (int j = 0; j < tiles[i].length; j++) {
-                model.getTile(i, j).addObserver(tiles[i][j]);
+                example.getTile(i, j).addObserver(tiles[i][j]);
+                bruteForceExploration.addObserver(tiles[i][j]);
+                depthExploration.addObserver(tiles[i][j]);
                 tiles[i][j].addFocusListener(textTileController);
             }
         mf.getControlPanel().getStartDepthButton().addMouseListener(startController);
         mf.getControlPanel().getResetButton().addMouseListener(startController);
-        mf.getControlPanel().getStartOtherButton().addMouseListener(startController);
+        mf.getControlPanel().getStartBruteForceButton().addMouseListener(startController);
     }
 
     private void initControllers() {
-        startController = new StartController(example);
+        startController = new StartController(example, depthExploration, bruteForceExploration);
         textTileController = new TextTileController(example);
     }
 
